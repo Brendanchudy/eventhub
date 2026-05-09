@@ -44,21 +44,21 @@ export function AdminHeader() {
             <DropdownMenuItem className="flex flex-col items-start gap-1 py-3">
               <span className="font-medium">New event owner application</span>
               <span className="text-xs text-muted-foreground">
-                John Doe has applied to become an event owner
+                Ibrahim Danjuma has applied to become an event owner
               </span>
               <span className="text-xs text-muted-foreground">2 minutes ago</span>
             </DropdownMenuItem>
             <DropdownMenuItem className="flex flex-col items-start gap-1 py-3">
               <span className="font-medium">Event flagged for review</span>
               <span className="text-xs text-muted-foreground">
-                {"\"Tech Conference 2026\" has been flagged by users"}
+                {"\"Lagos Tech & Startup Summit 2026\" has been flagged by users"}
               </span>
               <span className="text-xs text-muted-foreground">15 minutes ago</span>
             </DropdownMenuItem>
             <DropdownMenuItem className="flex flex-col items-start gap-1 py-3">
               <span className="font-medium">High transaction volume</span>
               <span className="text-xs text-muted-foreground">
-                Platform revenue exceeded $10,000 today
+                Platform revenue exceeded ₦15,000,000 today
               </span>
               <span className="text-xs text-muted-foreground">1 hour ago</span>
             </DropdownMenuItem>
@@ -76,12 +76,12 @@ export function AdminHeader() {
               <Avatar className="h-8 w-8">
                 <AvatarImage src="/placeholder-avatar.jpg" />
                 <AvatarFallback className="bg-primary text-primary-foreground text-sm">
-                  SA
+                  CO
                 </AvatarFallback>
               </Avatar>
               <div className="flex flex-col items-start">
-                <span className="text-sm font-medium">Super Admin</span>
-                <span className="text-xs text-muted-foreground">admin@eventhub.com</span>
+                <span className="text-sm font-medium">Chioma Okonkwo</span>
+                <span className="text-xs text-muted-foreground">admin@brendanskitchen.ng</span>
               </div>
               <ChevronDown className="h-4 w-4 text-muted-foreground" />
             </Button>

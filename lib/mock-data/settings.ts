@@ -83,7 +83,7 @@ export const emailTemplates: EmailTemplate[] = [
   {
     id: "et_001",
     name: "Welcome Email",
-    subject: "Welcome to EventHub!",
+    subject: "Welcome to Brendan's Kitchen!",
     key: "welcome_email",
     description: "Sent to new users after registration",
     updatedAt: new Date(2025, 2, 10)
@@ -115,7 +115,7 @@ export const emailTemplates: EmailTemplate[] = [
   {
     id: "et_005",
     name: "Owner Application Rejected",
-    subject: "Update on your EventHub application",
+    subject: "Update on your Brendan's Kitchen application",
     key: "owner_rejected",
     description: "Sent when event owner application is rejected",
     updatedAt: new Date(2025, 0, 15)
@@ -174,8 +174,8 @@ export function getPlatformStats(): PlatformStats {
 
 export const platformSettings = {
   commissionRate: 10,
-  supportedCurrencies: ["USD", "EUR", "GBP"],
-  defaultCurrency: "USD",
+  supportedCurrencies: ["NGN", "USD", "EUR"],
+  defaultCurrency: "NGN",
   maintenanceMode: false,
   minTicketPrice: 5,
   maxTicketPrice: 10000,

@@ -26,15 +26,7 @@ import {
 } from "lucide-react"
 import { format } from "date-fns"
 import Link from "next/link"
-
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value)
-}
+import { formatNaira } from "@/lib/format-naira"
 
 export function generateStaticParams() {
   return mockUsers.map((user) => ({
@@ -170,7 +162,7 @@ export default async function UserDetailPage({
                 <div>
                   <p className="text-sm text-muted-foreground">Total Spent</p>
                   <p className="text-2xl font-bold text-card-foreground">
-                    {formatCurrency(user.totalSpent || 0)}
+                    {formatNaira(user.totalSpent || 0)}
                   </p>
                 </div>
               </CardContent>
@@ -211,7 +203,7 @@ export default async function UserDetailPage({
                           <StatusBadge status={booking.status} />
                         </TableCell>
                         <TableCell className="text-right text-card-foreground">
-                          {formatCurrency(booking.totalAmount)}
+                          {formatNaira(booking.totalAmount)}
                         </TableCell>
                         <TableCell className="text-muted-foreground">
                           {format(booking.createdAt, "MMM d, yyyy")}

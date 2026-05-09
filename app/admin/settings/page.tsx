@@ -104,7 +104,7 @@ export default function SettingsPage() {
         <CardContent className="space-y-6">
           <div className="grid gap-4 md:grid-cols-3">
             <div className="space-y-2">
-              <Label htmlFor="minTicketPrice">Minimum Ticket Price ($)</Label>
+              <Label htmlFor="minTicketPrice">Minimum Ticket Price (₦)</Label>
               <Input
                 id="minTicketPrice"
                 type="number"
@@ -114,7 +114,7 @@ export default function SettingsPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="maxTicketPrice">Maximum Ticket Price ($)</Label>
+              <Label htmlFor="maxTicketPrice">Maximum Ticket Price (₦)</Label>
               <Input
                 id="maxTicketPrice"
                 type="number"

@@ -11,16 +11,8 @@ import {
 } from "@/components/ui/table"
 import { StatusBadge } from "./status-badge"
 import { mockEvents } from "@/lib/mock-data"
+import { formatNaira } from "@/lib/format-naira"
 import { format } from "date-fns"
-
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value)
-}
 
 // Get top 5 events by revenue
 const topEvents = [...mockEvents]
@@ -63,7 +55,7 @@ export function TopEventsTable() {
                   {event.ticketsSold} / {event.capacity}
                 </TableCell>
                 <TableCell className="text-right font-medium text-card-foreground">
-                  {formatCurrency(event.revenue)}
+                  {formatNaira(event.revenue)}
                 </TableCell>
               </TableRow>
             ))}

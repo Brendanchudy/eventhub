@@ -17,15 +17,7 @@ import {
 import { MoreHorizontal, Eye, Ban, UserCheck, Trash2, UserCog } from "lucide-react"
 import { format } from "date-fns"
 import Link from "next/link"
-
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value)
-}
+import { formatNaira } from "@/lib/format-naira"
 
 const columns = [
   {
@@ -71,7 +63,7 @@ const columns = [
     key: "spent",
     header: "Total Spent",
     cell: (user: User) => (
-      <span className="text-card-foreground">{formatCurrency(user.totalSpent || 0)}</span>
+      <span className="text-card-foreground">{formatNaira(user.totalSpent || 0)}</span>
     )
   },
   {

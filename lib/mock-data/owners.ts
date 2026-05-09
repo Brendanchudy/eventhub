@@ -1,23 +1,30 @@
-import { EventOwner, OwnerStatus, User } from "./types"
+import { EventOwner, OwnerStatus } from "./types"
 import { mockUsers } from "./users"
 
 const businessNames = [
-  "TechVentures Events",
-  "Creative Gatherings Co.",
-  "Summit Productions",
-  "EventCraft Studios",
-  "Momentum Events",
-  "Stellar Experiences",
-  "Prime Event Group",
-  "Horizon Productions",
-  "Apex Event Management",
-  "Vivid Events Co.",
-  "NextGen Conferences",
-  "Urban Event Collective",
-  "Inspire Events LLC",
-  "Catalyst Productions",
-  "Elevate Experience Co."
+  "Lagos Events Collective",
+  "Abuja Summit Productions",
+  "Calabar Creative Gatherings",
+  "Port Harcourt Nightlife Co.",
+  "Ibadan Experience Hub",
+  "Kano Cultural Affairs",
+  "Enugu Tech & Arts",
+  "Benin Heritage Events",
+  "Uyo Sound & Stage",
+  "Jos Plateau Gatherings",
+  "Akure Live Promotions",
+  "Owerri Weekend Series",
+  "Zaria Northern Lights Events",
+  "Minna Community Festivals",
+  "Asaba Delta Shows"
 ]
+
+function slugBusiness(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "")
+    .slice(0, 40)
+}
 
 // Seeded random function for consistent SSR/CSR data
 function seededRandom(seed: number): number {
@@ -29,15 +36,27 @@ function seededDate(seed: number, start: Date, end: Date): Date {
   return new Date(start.getTime() + seededRandom(seed) * (end.getTime() - start.getTime()))
 }
 
+function nigeriaMobile(seed: number): string {
+  const prefixes = ["803", "806", "814", "903", "905", "708", "701", "802"]
+  const prefix = prefixes[Math.floor(seededRandom(seed) * prefixes.length)]
+  const mid = String(Math.floor(seededRandom(seed + 1) * 900) + 100).padStart(3, "0")
+  const last = String(Math.floor(seededRandom(seed + 2) * 9000) + 1000).padStart(4, "0")
+  return `+234 ${prefix} ${mid} ${last}`
+}
+
 function generateOwner(index: number): EventOwner {
   const statuses: OwnerStatus[] = ["approved", "approved", "approved", "approved", "pending", "pending", "rejected", "suspended"]
   const status = statuses[index % statuses.length]
   const user = mockUsers.find(u => u.role === "event_owner") || mockUsers[index]
-  
+
+  const businessName = businessNames[index % businessNames.length]
+  const slug = slugBusiness(businessName)
   const applicationDate = seededDate(index * 10 + 1, new Date(2024, 0, 1), new Date(2025, 5, 1))
-  const approvedDate = status === "approved" 
+  const approvedDate = status === "approved"
     ? seededDate(index * 10 + 2, applicationDate, new Date(2025, 12, 31))
     : undefined
+
+  const ownerFirst = businessName.split(" ")[0]
 
   return {
     id: `owner_${String(index + 1).padStart(5, "0")}`,
@@ -46,19 +65,19 @@ function generateOwner(index: number): EventOwner {
       ...user,
       id: `user_owner_${index + 1}`,
       role: "event_owner" as const,
-      name: `${businessNames[index % businessNames.length].split(" ")[0]} Owner`,
-      email: `contact@${businessNames[index % businessNames.length].toLowerCase().replace(/\s+/g, "")}.com`
+      name: `${ownerFirst} Lead`,
+      email: `contact@${slug}.ng`
     },
-    businessName: businessNames[index % businessNames.length],
-    businessEmail: `info@${businessNames[index % businessNames.length].toLowerCase().replace(/\s+/g, "")}.com`,
-    phone: `+1 (${Math.floor(seededRandom(index * 10 + 3) * 900) + 100}) ${Math.floor(seededRandom(index * 10 + 4) * 900) + 100}-${Math.floor(seededRandom(index * 10 + 5) * 9000) + 1000}`,
+    businessName,
+    businessEmail: `info@${slug}.ng`,
+    phone: nigeriaMobile(index * 10 + 3),
     status,
     applicationDate,
     approvedDate,
     totalEvents: status === "approved" ? Math.floor(seededRandom(index * 10 + 6) * 15) + 1 : 0,
-    totalRevenue: status === "approved" ? Math.floor(seededRandom(index * 10 + 7) * 100000) + 5000 : 0,
-    pendingPayout: status === "approved" ? Math.floor(seededRandom(index * 10 + 8) * 10000) : 0,
-    documents: ["business_license.pdf", "tax_id.pdf"]
+    totalRevenue: status === "approved" ? Math.floor(seededRandom(index * 10 + 7) * 9500000) + 500000 : 0,
+    pendingPayout: status === "approved" ? Math.floor(seededRandom(index * 10 + 8) * 900000) + 50000 : 0,
+    documents: ["cac_certificate.pdf", "tax_identification.pdf"]
   }
 }
 
@@ -82,7 +101,7 @@ export function getApprovedOwners(): EventOwner[] {
 
 export function searchOwners(query: string): EventOwner[] {
   const lowerQuery = query.toLowerCase()
-  return mockOwners.filter(o => 
+  return mockOwners.filter(o =>
     o.businessName.toLowerCase().includes(lowerQuery) ||
     o.user.name.toLowerCase().includes(lowerQuery) ||
     o.businessEmail.toLowerCase().includes(lowerQuery)

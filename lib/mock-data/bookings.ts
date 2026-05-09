@@ -12,7 +12,7 @@ function seededDate(seed: number, start: Date, end: Date): Date {
   return new Date(start.getTime() + seededRandom(seed) * (end.getTime() - start.getTime()))
 }
 
-const ticketTypes = ["General Admission", "VIP", "Early Bird", "Student", "Group"]
+const ticketTypes = ["Regular", "VIP", "Early Bird", "Student", "Table / Group"]
 
 function generateBooking(index: number): Booking {
   const statuses: BookingStatus[] = ["confirmed", "confirmed", "confirmed", "confirmed", "cancelled", "refunded", "pending"]
@@ -20,8 +20,8 @@ function generateBooking(index: number): Booking {
   const user = mockUsers[index % mockUsers.length]
   const event = mockEvents[index % mockEvents.length]
   const quantity = Math.floor(seededRandom(index * 10 + 1) * 4) + 1
-  const basePrice = Math.floor(seededRandom(index * 10 + 2) * 150) + 25
-  
+  const basePrice = Math.floor(seededRandom(index * 10 + 2) * 45000) + 2500
+
   return {
     id: `booking_${String(index + 1).padStart(6, "0")}`,
     userId: user.id,
@@ -33,7 +33,7 @@ function generateBooking(index: number): Booking {
     totalAmount: quantity * basePrice,
     status,
     createdAt: seededDate(index * 10 + 3, new Date(2024, 6, 1), new Date(2025, 12, 31)),
-    checkInTime: status === "confirmed" && seededRandom(index * 10 + 4) > 0.5 
+    checkInTime: status === "confirmed" && seededRandom(index * 10 + 4) > 0.5
       ? seededDate(index * 10 + 5, new Date(2025, 0, 1), new Date(2025, 12, 31))
       : undefined
   }
@@ -89,10 +89,10 @@ export function getBookingsByMonth(): { month: string; bookings: number; revenue
     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
   ]
-  
+
   return months.map((month, index) => {
-    const monthBookings = mockBookings.filter(b => 
-      b.createdAt.getMonth() === index && 
+    const monthBookings = mockBookings.filter(b =>
+      b.createdAt.getMonth() === index &&
       b.createdAt.getFullYear() === 2025
     )
     return {

@@ -17,14 +17,12 @@ import {
   BarChart,
   Bar
 } from "recharts"
+import { formatNaira } from "@/lib/format-naira"
 
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value)
+function formatNairaCompact(value: number) {
+  if (value >= 1_000_000) return `₦${(value / 1_000_000).toFixed(1)}M`
+  if (value >= 1000) return `₦${Math.round(value / 1000)}k`
+  return formatNaira(value)
 }
 
 interface CustomTooltipProps {
@@ -44,7 +42,7 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
         <p className="mb-2 font-medium text-card-foreground">{label}</p>
         {payload.map((entry, index) => (
           <p key={index} className="text-sm" style={{ color: entry.color }}>
-            {entry.name === "paid" ? "Paid to Owners" : "Platform Commission"}: {formatCurrency(entry.value)}
+            {entry.name === "paid" ? "Paid to Owners" : "Platform Commission"}: {formatNaira(entry.value)}
           </p>
         ))}
       </div>
@@ -98,28 +96,28 @@ export default function FinancePage() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <StatCard
           title="Total Revenue (GMV)"
-          value={formatCurrency(bookingStats.totalRevenue)}
+          value={formatNaira(bookingStats.totalRevenue)}
           change={{ value: 18.5, label: "from last month" }}
           icon={DollarSign}
           variant="success"
         />
         <StatCard
           title="Platform Commission"
-          value={formatCurrency(payoutStats.totalCommission)}
+          value={formatNaira(payoutStats.totalCommission)}
           change={{ value: 18.5, label: "from last month" }}
           icon={TrendingUp}
           variant="info"
         />
         <StatCard
           title="Paid to Owners"
-          value={formatCurrency(payoutStats.totalPaid)}
+          value={formatNaira(payoutStats.totalPaid)}
           change={{ value: 12.3, label: "from last month" }}
           icon={CreditCard}
           variant="default"
         />
         <StatCard
           title="Pending Payouts"
-          value={formatCurrency(payoutStats.totalPending)}
+          value={formatNaira(payoutStats.totalPending)}
           icon={PiggyBank}
           variant="warning"
         />
@@ -151,7 +149,7 @@ export default function FinancePage() {
                   <YAxis 
                     stroke="oklch(0.65 0 0)"
                     tick={{ fill: "oklch(0.65 0 0)", fontSize: 12 }}
-                    tickFormatter={(value) => `$${value / 1000}k`}
+                    tickFormatter={(value) => formatNairaCompact(value)}
                   />
                   <Tooltip content={<CustomTooltip />} />
                   <Area
@@ -187,7 +185,7 @@ export default function FinancePage() {
                   <YAxis 
                     stroke="oklch(0.65 0 0)"
                     tick={{ fill: "oklch(0.65 0 0)", fontSize: 12 }}
-                    tickFormatter={(value) => `$${value / 1000}k`}
+                    tickFormatter={(value) => formatNairaCompact(value)}
                   />
                   <Tooltip content={<CustomTooltip />} />
                   <Bar 
@@ -219,25 +217,25 @@ export default function FinancePage() {
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Gross Revenue</span>
               <span className="font-medium text-card-foreground">
-                {formatCurrency(bookingStats.totalRevenue)}
+                {formatNaira(bookingStats.totalRevenue)}
               </span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Platform Fee (10%)</span>
               <span className="font-medium text-success">
-                {formatCurrency(payoutStats.totalCommission)}
+                {formatNaira(payoutStats.totalCommission)}
               </span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Owner Share (90%)</span>
               <span className="font-medium text-card-foreground">
-                {formatCurrency(bookingStats.totalRevenue - payoutStats.totalCommission)}
+                {formatNaira(bookingStats.totalRevenue - payoutStats.totalCommission)}
               </span>
             </div>
             <div className="flex items-center justify-between border-t border-border pt-4">
               <span className="text-sm text-muted-foreground">Refunded</span>
               <span className="font-medium text-destructive">
-                -{formatCurrency(bookingStats.refundedAmount)}
+                -{formatNaira(bookingStats.refundedAmount)}
               </span>
             </div>
           </CardContent>
@@ -295,7 +293,7 @@ export default function FinancePage() {
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Avg. Order Value</span>
               <span className="font-medium text-card-foreground">
-                {formatCurrency(bookingStats.totalRevenue / bookingStats.confirmedBookings)}
+                {formatNaira(bookingStats.totalRevenue / bookingStats.confirmedBookings)}
               </span>
             </div>
             <div className="flex items-center justify-between border-t border-border pt-4">

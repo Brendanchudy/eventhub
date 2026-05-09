@@ -1,15 +1,7 @@
 import { StatCard } from "@/components/admin/stat-card"
 import { supabase } from "@/lib/supabase"
+import { formatNaira } from "@/lib/format-naira"
 import { Users, Calendar, DollarSign, Ticket } from "lucide-react"
-
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value)
-}
 
 export function DashboardMetricCardsSkeleton() {
   return (
@@ -86,7 +78,7 @@ export async function DashboardMetricCards() {
       />
       <StatCard
         title="Platform Revenue"
-        value={formatCurrency(totalRevenue)}
+        value={formatNaira(totalRevenue)}
         change={{ value: 22.1, label: "from last month" }}
         icon={DollarSign}
         variant="success"

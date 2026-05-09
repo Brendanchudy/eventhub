@@ -17,15 +17,7 @@ import {
 import { MoreHorizontal, Eye, Ban, CheckCircle, XCircle, Calendar } from "lucide-react"
 import { format } from "date-fns"
 import Link from "next/link"
-
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value)
-}
+import { formatNaira } from "@/lib/format-naira"
 
 const columns = [
   {
@@ -62,14 +54,14 @@ const columns = [
     key: "revenue",
     header: "Total Revenue",
     cell: (owner: EventOwner) => (
-      <span className="text-card-foreground">{formatCurrency(owner.totalRevenue)}</span>
+      <span className="text-card-foreground">{formatNaira(owner.totalRevenue)}</span>
     )
   },
   {
     key: "pending",
     header: "Pending Payout",
     cell: (owner: EventOwner) => (
-      <span className="text-card-foreground">{formatCurrency(owner.pendingPayout)}</span>
+      <span className="text-card-foreground">{formatNaira(owner.pendingPayout)}</span>
     )
   },
   {

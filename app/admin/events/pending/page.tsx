@@ -27,15 +27,7 @@ import {
 } from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
 import { useState } from "react"
-
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value)
-}
+import { formatNaira } from "@/lib/format-naira"
 
 function EventReviewCard({ event }: { event: Event }) {
   const [rejectReason, setRejectReason] = useState("")
@@ -150,7 +142,7 @@ function EventReviewCard({ event }: { event: Event }) {
             <div className="flex items-center gap-2 text-sm">
               <DollarSign className="h-4 w-4 text-muted-foreground" />
               <span className="text-muted-foreground">
-                Est. Revenue: {formatCurrency(event.capacity * 50)}
+                Est. Revenue: {formatNaira(event.capacity * 30000)}
               </span>
             </div>
           </div>

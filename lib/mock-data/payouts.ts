@@ -17,7 +17,7 @@ function generatePayout(index: number): Payout {
   const statuses: PayoutStatus[] = ["completed", "completed", "completed", "pending", "pending", "processing", "failed"]
   const status = statuses[index % statuses.length]
   const owner = mockOwners[index % mockOwners.length]
-  const amount = Math.floor(seededRandom(index * 10 + 1) * 5000) + 500
+  const amount = Math.floor(seededRandom(index * 10 + 1) * 450000) + 25000
   const platformFee = Math.floor(amount * PLATFORM_FEE_RATE)
   const createdAt = seededDate(index * 10 + 2, new Date(2024, 6, 1), new Date(2025, 12, 31))
   

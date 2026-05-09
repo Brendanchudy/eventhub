@@ -17,10 +17,10 @@ const actions = [
 ]
 
 const adminNames = [
-  "Super Admin",
-  "John Admin",
-  "Sarah Manager",
-  "Mike Operations"
+  "Chioma Okonkwo",
+  "Emeka Adeyemi",
+  "Ngozi Mohammed",
+  "Ibrahim Lawal"
 ]
 
 // Seeded random function for consistent SSR/CSR data
@@ -36,7 +36,7 @@ function seededDate(seed: number, start: Date, end: Date): Date {
 function generateAuditLog(index: number): AuditLog {
   const actionData = actions[index % actions.length]
   const adminName = adminNames[index % adminNames.length]
-  
+
   return {
     id: `audit_${String(index + 1).padStart(6, "0")}`,
     adminId: `admin_${String((index % 4) + 1).padStart(3, "0")}`,
@@ -46,7 +46,7 @@ function generateAuditLog(index: number): AuditLog {
     resourceId: `${actionData.resourceType}_${String(Math.floor(seededRandom(index * 10 + 1) * 50) + 1).padStart(5, "0")}`,
     details: actionData.details,
     timestamp: seededDate(index * 10 + 2, new Date(2024, 6, 1), new Date(2025, 12, 31)),
-    ipAddress: `192.168.${Math.floor(seededRandom(index * 10 + 3) * 255)}.${Math.floor(seededRandom(index * 10 + 4) * 255)}`
+    ipAddress: `105.${112 + Math.floor(seededRandom(index * 10 + 3) * 8)}.${Math.floor(seededRandom(index * 10 + 4) * 255)}.${Math.floor(seededRandom(index * 10 + 5) * 255)}`
   }
 }
 
@@ -75,7 +75,7 @@ export function getRecentAuditLogs(limit: number = 20): AuditLog[] {
 
 export function searchAuditLogs(query: string): AuditLog[] {
   const lowerQuery = query.toLowerCase()
-  return mockAuditLogs.filter(l => 
+  return mockAuditLogs.filter(l =>
     l.action.toLowerCase().includes(lowerQuery) ||
     l.adminName.toLowerCase().includes(lowerQuery) ||
     l.details.toLowerCase().includes(lowerQuery) ||

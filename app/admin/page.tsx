@@ -11,15 +11,7 @@ import { UserCheck, AlertTriangle, Clock, DollarSign } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Suspense } from "react"
-
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value)
-}
+import { formatNaira } from "@/lib/format-naira"
 
 export default function AdminDashboard() {
   const stats = getPlatformStats()
@@ -93,7 +85,7 @@ export default function AdminDashboard() {
             <div>
               <p className="text-sm text-muted-foreground">Total GMV</p>
               <p className="text-xl font-bold text-card-foreground">
-                {formatCurrency(stats.totalRevenue)}
+                {formatNaira(stats.totalRevenue)}
               </p>
             </div>
           </div>

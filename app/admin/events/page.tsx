@@ -27,15 +27,7 @@ import {
 import { format } from "date-fns"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
-
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value)
-}
+import { formatNaira } from "@/lib/format-naira"
 
 const columns = [
   {
@@ -105,7 +97,7 @@ const columns = [
     header: "Revenue",
     cell: (event: Event) => (
       <span className="font-medium text-card-foreground">
-        {formatCurrency(event.revenue)}
+        {formatNaira(event.revenue)}
       </span>
     )
   },

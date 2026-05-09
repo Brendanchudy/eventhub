@@ -26,15 +26,7 @@ import {
 } from "lucide-react"
 import { format } from "date-fns"
 import Link from "next/link"
-
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value)
-}
+import { formatNaira } from "@/lib/format-naira"
 
 const columns = [
   {
@@ -64,10 +56,10 @@ const columns = [
     cell: (payout: Payout) => (
       <div>
         <p className="font-medium text-card-foreground">
-          {formatCurrency(payout.amount)}
+          {formatNaira(payout.amount)}
         </p>
         <p className="text-xs text-muted-foreground">
-          Fee: {formatCurrency(payout.platformFee)}
+          Fee: {formatNaira(payout.platformFee)}
         </p>
       </div>
     )
@@ -77,7 +69,7 @@ const columns = [
     header: "Net Payout",
     cell: (payout: Payout) => (
       <span className="font-medium text-success">
-        {formatCurrency(payout.netAmount)}
+        {formatNaira(payout.netAmount)}
       </span>
     )
   },
@@ -206,7 +198,7 @@ export default function PayoutsPage() {
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Completed</p>
-              <p className="text-xl font-bold text-success">{formatCurrency(stats.totalPaid)}</p>
+              <p className="text-xl font-bold text-success">{formatNaira(stats.totalPaid)}</p>
             </div>
           </CardContent>
         </Card>
@@ -217,7 +209,7 @@ export default function PayoutsPage() {
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Pending</p>
-              <p className="text-xl font-bold text-warning">{formatCurrency(stats.totalPending)}</p>
+              <p className="text-xl font-bold text-warning">{formatNaira(stats.totalPending)}</p>
             </div>
           </CardContent>
         </Card>
@@ -228,7 +220,7 @@ export default function PayoutsPage() {
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Commission Earned</p>
-              <p className="text-xl font-bold text-info">{formatCurrency(stats.totalCommission)}</p>
+              <p className="text-xl font-bold text-info">{formatNaira(stats.totalCommission)}</p>
             </div>
           </CardContent>
         </Card>

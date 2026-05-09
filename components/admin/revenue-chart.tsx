@@ -10,29 +10,27 @@ import {
   Tooltip,
   ResponsiveContainer
 } from "recharts"
+import { formatNaira } from "@/lib/format-naira"
 
 const data = [
-  { month: "Jan", revenue: 12400, bookings: 145 },
-  { month: "Feb", revenue: 14800, bookings: 178 },
-  { month: "Mar", revenue: 18200, bookings: 203 },
-  { month: "Apr", revenue: 16500, bookings: 192 },
-  { month: "May", revenue: 21800, bookings: 256 },
-  { month: "Jun", revenue: 24600, bookings: 289 },
-  { month: "Jul", revenue: 28400, bookings: 324 },
-  { month: "Aug", revenue: 32100, bookings: 367 },
-  { month: "Sep", revenue: 29800, bookings: 341 },
-  { month: "Oct", revenue: 34500, bookings: 398 },
-  { month: "Nov", revenue: 38200, bookings: 445 },
-  { month: "Dec", revenue: 42800, bookings: 489 }
+  { month: "Jan", revenue: 9_300_000, bookings: 145 },
+  { month: "Feb", revenue: 11_100_000, bookings: 178 },
+  { month: "Mar", revenue: 13_650_000, bookings: 203 },
+  { month: "Apr", revenue: 12_375_000, bookings: 192 },
+  { month: "May", revenue: 16_350_000, bookings: 256 },
+  { month: "Jun", revenue: 18_450_000, bookings: 289 },
+  { month: "Jul", revenue: 21_300_000, bookings: 324 },
+  { month: "Aug", revenue: 24_075_000, bookings: 367 },
+  { month: "Sep", revenue: 22_350_000, bookings: 341 },
+  { month: "Oct", revenue: 25_875_000, bookings: 398 },
+  { month: "Nov", revenue: 28_650_000, bookings: 445 },
+  { month: "Dec", revenue: 32_100_000, bookings: 489 }
 ]
 
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value)
+function formatNairaAxis(value: number) {
+  if (value >= 1_000_000) return `₦${(value / 1_000_000).toFixed(0)}M`
+  if (value >= 1000) return `₦${Math.round(value / 1000)}k`
+  return formatNaira(value)
 }
 
 interface CustomTooltipProps {
@@ -53,7 +51,7 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
         {payload.map((entry, index) => (
           <p key={index} className="text-sm" style={{ color: entry.color }}>
             {entry.name === "revenue" ? "Revenue" : "Bookings"}: {" "}
-            {entry.name === "revenue" ? formatCurrency(entry.value) : entry.value}
+            {entry.name === "revenue" ? formatNaira(entry.value) : entry.value}
           </p>
         ))}
       </div>
@@ -79,17 +77,17 @@ export function RevenueChart() {
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="oklch(0.25 0.01 260)" />
-              <XAxis 
-                dataKey="month" 
+              <XAxis
+                dataKey="month"
                 stroke="oklch(0.65 0 0)"
                 tick={{ fill: "oklch(0.65 0 0)", fontSize: 12 }}
                 tickLine={{ stroke: "oklch(0.25 0.01 260)" }}
               />
-              <YAxis 
+              <YAxis
                 stroke="oklch(0.65 0 0)"
                 tick={{ fill: "oklch(0.65 0 0)", fontSize: 12 }}
                 tickLine={{ stroke: "oklch(0.25 0.01 260)" }}
-                tickFormatter={(value) => `$${value / 1000}k`}
+                tickFormatter={(value) => formatNairaAxis(value)}
               />
               <Tooltip content={<CustomTooltip />} />
               <Area

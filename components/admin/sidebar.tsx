@@ -166,7 +166,7 @@ export function AdminSidebar() {
           <Zap className="h-4 w-4 text-sidebar-primary-foreground" />
         </div>
         <span className="text-lg font-semibold text-sidebar-foreground">
-          EventHub
+          Brendan&apos;s Kitchen
         </span>
         <span className="ml-auto rounded bg-sidebar-accent px-2 py-0.5 text-xs font-medium text-sidebar-accent-foreground">
           Admin

@@ -2,8 +2,8 @@ import { AdminSidebar } from "@/components/admin/sidebar"
 import { AdminHeader } from "@/components/admin/header"
 
 export const metadata = {
-  title: "Admin Portal | EventHub",
-  description: "Super Admin dashboard for EventHub platform management",
+  title: "Admin Portal | Brendan's Kitchen",
+  description: "Super Admin dashboard for Brendan's Kitchen platform management",
 }
 
 export default function AdminLayout({

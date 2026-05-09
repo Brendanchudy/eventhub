@@ -1,31 +1,31 @@
 import { Event, EventStatus } from "./types"
 
 const eventTitles = [
-  "Tech Conference 2026",
-  "Summer Music Festival",
-  "Digital Marketing Summit",
-  "Startup Pitch Night",
-  "Jazz in the Park",
-  "AI & Machine Learning Workshop",
-  "Food & Wine Expo",
-  "Photography Masterclass",
-  "Yoga Retreat Weekend",
-  "Comedy Night Live",
-  "Blockchain Summit",
-  "Design Thinking Workshop",
-  "Indie Film Festival",
-  "Culinary Arts Show",
-  "Electronic Dance Party",
-  "Business Networking Mixer",
-  "Art Exhibition Opening",
-  "Science Fair 2026",
-  "Fashion Week Preview",
-  "Health & Wellness Expo",
-  "Gaming Tournament",
-  "Poetry Slam Night",
-  "Craft Beer Festival",
-  "Marathon Training Camp",
-  "Classical Concert Series"
+  "Lagos Tech & Startup Summit 2026",
+  "Afrobeats Live — Freedom Park",
+  "Digital Marketing Masterclass Abuja",
+  "Founders Pitch Night Victoria Island",
+  "Jazz Under the Stars — Ikoyi",
+  "AI & Data Skills Workshop Lekki",
+  "Taste of Nigeria Food Festival",
+  "Street Photography Walk — CMS",
+  "Wellness Weekend Retreat Obudu",
+  "Laff Mattaz Comedy Special",
+  "FinTech & Banking Forum",
+  "Design Sprint Workshop Yaba",
+  "Nollywood Indie Film Evening",
+  "Chef's Table Pop-Up VI",
+  "Electro Night Owambe Series",
+  "SME Networking Mixer Ikeja",
+  "Contemporary Art Opening Ikoyi",
+  "National Science Fair Abuja",
+  "Lagos Fashion Weekend Preview",
+  "Health & Wellness Expo VI",
+  "Esports Championship Lagos",
+  "WordFest Poetry Slam",
+  "Craft & Culture Festival Calabar",
+  "City Marathon Training Camp",
+  "Classical Evening Muson Centre"
 ]
 
 const categories = [
@@ -42,16 +42,16 @@ const categories = [
 ]
 
 const locations = [
-  "San Francisco, CA",
-  "New York, NY",
-  "Los Angeles, CA",
-  "Chicago, IL",
-  "Austin, TX",
-  "Seattle, WA",
-  "Denver, CO",
-  "Miami, FL",
-  "Boston, MA",
-  "Portland, OR"
+  "Eko Hotel, Victoria Island, Lagos",
+  "Landmark Centre, Oniru, Lagos",
+  "Transcorp Hilton, Maitama, Abuja",
+  "Freedom Park, Lagos Island",
+  "Muson Centre, Onikan, Lagos",
+  "ICC Abuja, Central Area",
+  "OCC Event Centre, Port Harcourt",
+  "IICC Ibadan, Oyo State",
+  "Millennium Park, Abuja",
+  "Terra Kulture, VI, Lagos"
 ]
 
 // Seeded random function for consistent SSR/CSR data
@@ -68,18 +68,18 @@ function generateEvent(index: number): Event {
   const statuses: EventStatus[] = ["published", "published", "published", "pending_review", "draft", "completed", "cancelled"]
   const status = statuses[index % statuses.length]
   const capacity = Math.floor(seededRandom(index * 100 + 1) * 500) + 50
-  const ticketsSold = status === "completed" 
+  const ticketsSold = status === "completed"
     ? Math.floor(capacity * (0.7 + seededRandom(index * 100 + 2) * 0.3))
     : Math.floor(seededRandom(index * 100 + 3) * capacity * 0.8)
-  const ticketPrice = Math.floor(seededRandom(index * 100 + 4) * 150) + 25
-  
+  const ticketPrice = Math.floor(seededRandom(index * 100 + 4) * 45000) + 2500
+
   const startDate = seededDate(index * 100 + 5, new Date(2025, 0, 1), new Date(2026, 11, 31))
   const endDate = new Date(startDate.getTime() + Math.floor(seededRandom(index * 100 + 6) * 3 + 1) * 24 * 60 * 60 * 1000)
-  
+
   return {
     id: `event_${String(index + 1).padStart(5, "0")}`,
     title: eventTitles[index % eventTitles.length],
-    description: `An amazing ${categories[index % categories.length].toLowerCase()} event featuring top industry experts and exciting activities.`,
+    description: `A standout ${categories[index % categories.length].toLowerCase()} experience in Nigeria — top speakers, great networking, and local flavour.`,
     ownerId: `owner_${String((index % 10) + 1).padStart(5, "0")}`,
     category: categories[index % categories.length],
     status,
@@ -112,7 +112,7 @@ export function getEventsByOwner(ownerId: string): Event[] {
 
 export function searchEvents(query: string): Event[] {
   const lowerQuery = query.toLowerCase()
-  return mockEvents.filter(e => 
+  return mockEvents.filter(e =>
     e.title.toLowerCase().includes(lowerQuery) ||
     e.category.toLowerCase().includes(lowerQuery) ||
     e.location.toLowerCase().includes(lowerQuery)
